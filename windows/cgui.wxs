@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" UpgradeCode="81d20fa9-2bae-4f78-add2-54b299def4de" Version="1.0.0.0" Language="1033" Name="CGUI" Manufacturer="Capocasa">
+    <Package InstallerVersion="300" Compressed="yes"/>
+    <Media Id="1" Cabinet="cgui.cab" EmbedCab="yes" />
+    <Icon Id="cgui.ico" SourceFile="cgui.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="cgui.ico" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+          <Directory Id="APPLICATIONROOTDIRECTORY" Name="CGUI"/>
+      </Directory>
+      <!-- Step 1: Define the directory structure -->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="CGUI"/>
+      </Directory>
+    </Directory>
+
+    <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
+      <Component Id="cgui.exe" Guid="81d20fa9-2bae-4f78-add2-54b299def4de">
+        <File Id="cgui.exe" Source="cgui.exe" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="1036cda7-49de-468d-9420-962e0cc55c09">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+          Name="CGUI"
+          Description="My Application Description"
+          Target="[#cgui.exe]"
+          WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\MyCompany\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <Feature Id="MainApplication" Title="Main Application" Level="1">
+      <ComponentRef Id="cgui.exe" />
+      <ComponentRef Id="ApplicationShortcut" />   
+    </Feature>
+  </Product>
+</Wix>
+
