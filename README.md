@@ -109,6 +109,7 @@ I have also included minimalistic application packages. After compiling, you can
 ```
 cd windows
 mv cgui.wxs appname.wxs
+wget https://github.com/neroist/uing/releases/download/0.7.2/libui.dll
 wixl -v appname.wxs
 cp appname.msi ~/Public
 # you can now double click on appname.msi on your windows system to install
@@ -117,6 +118,8 @@ cd ..
 cd macosx
 mv cgui.app appname.app
 cp appname appname.app/Contents/MacOS
+wget https://github.com/neroist/uing/releases/download/0.7.2/libui.lib
+mv libui.lib appname.app/Contents/MacOS/libui.dylib
 cp -R appname.app ~/Public
 
 # you can now drag appname.app to your application folder on OSX and run
@@ -126,6 +129,8 @@ Further development
 -------------------
 
 This is intended as a base example. For a real app deployed to real users, I would probably take this exact setup and put it onto a linux server, and run it with a git hook. I would also add the OSX app to a DMG image, and the linux binary to a tarball to have finished app packages as soon as I push my code.
+
+Having a docker image available with all toolchains installed that works out of the box would be really nice, for those who enjoy using docker. That would be especially great for a build server.
 
 Another area that could be looked into is automatic updates, but I do notice that often enough, users don't want automatic updates. And since your code is not exposed to the internet, it might be perfectly workable to let your users update manually.
 
